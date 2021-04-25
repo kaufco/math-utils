@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+        "target": "es2015",
+        "lib": [
+            "es2018",
+            "dom"
+        ],
+        "outDir": "./lib",
+        "removeComments": true,
+        "declaration": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "noUncheckedIndexedAccess": true,
+        "noUnusedLocals": true
+    },
+    "include": [
+        "src"
+    ],
+    "typedocOptions": {
+        "entryPoints": [
+            "src/index.ts"
+        ],
+        "out": "docs"
+    }
+}
