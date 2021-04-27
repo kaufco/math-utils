@@ -1,6 +1,6 @@
 {
     "name": "@kobayami/math-utils",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "Some little math helper functions",
     "main": "index.js",
     "scripts": {
@@ -23,13 +23,20 @@
     "files": [
         "lib/**/*"
     ],
-    "keywords": [],
+    "keywords": [
+        "math",
+        "utilities",
+        "div",
+        "mod",
+        "clamp",
+        "lerp"
+    ],
     "author": "Marco Kaufmann",
-    "license": "ISC",
+    "license": "MIT",
     "bugs": {
         "url": "https://github.com/kobayami/math-utils/issues"
     },
-    "homepage": "https://github.com/kobayami/math-utils#readme",
+    "homepage": "https://kobayami.github.io/math-utils",
     "devDependencies": {
         "@types/jasmine": "^3.6.9",
         "jasmine": "^3.7.0",

@@ -1,65 +1,40 @@
 # @kobayami/math-utils
-
-Some little math helper functions.
-
-See API-Doc [here](../blob/master/docs/modules.html)
-
-See API-Doc [here](./docs/modules.html)
-
-
+  
 ## Installation
 
 ```sh
 npm install --save @kobayami/math.utils
 ```
 
-## Repository
+## Version and License
 
-[https://github.com/kobayami/math-utils]
+- Latest version: 1.1.1
+- License: [MIT](https://kobayami.github.io/math-utils/LICENSE)
 
+## Summary
 
+Some little math helper functions that cover the following areas:
 
+- Division and modulo
+- Lerp functions (linear interpolation)
+- Clamp functions
+- Root and logrithm
+- Sign and integer
+- Rounding
 
-API Doc:
+## Usage Example
 
----------------------
+```TypeScript
+import {mod, divFrac, divTrunc} from "@kobayami/math-utils/lib";
 
-div and mod
-    mod
-    divFloor
-    divTrunc
+const two = mod(-13, 5);
+const minusThree = divFrac(-13, 5);
+const minusTwo = divTrunc(-15, 5);
+```
 
-Rounding
-    frac
-    higher
-    lower
+## See Also
 
-lerp type
-    rangeToRange
-    rangeToUnit
-    unitToRange
-    unitToUByte
-    uByteToUnit
-
-clamp
-    clamp
-    clampUnit
-
-angle
-    degreesToDefaultRange
-    degreesToRadians
-    radiansToDefaultRange
-    radiansToDegrees
-
-logpow
-    log
-    root
-
-misc
-    getDecimals
-    getDigits
-    isInteger
-    maskMinus0
-    signum
-    toInt32
-
+- [API Documentation](https://kobayami.github.io/math-utils/docs/modules.html)
+- [Project Homepage](https://kobayami.github.io/math-utils)
+- [Project on GitHub](https://github.com/kobayami/math-utils)
+- [Issues](https://github.com/kobayami/math-utils/issues)
