@@ -302,25 +302,3 @@ export function getDigits(value: number, radix: number): number {
 export function getDecimals(value: number): number {
     return getDigits(value, 10);
 }
-
-/*
-TODO:
-- some tests are missing
-- write better readme
-- API docu hochladen
-- Logo für Hithub und npmjs
-- Warum steht COde-Quality nur bei 49%?
-- license.isc hochladen
-- cannot find module '../src' - Problem lösen in spec
-
-
-	exceptional
-	concurrent
-	random
-
-	collection // collective
-	geometry // geometric
-	primes // primordial
-
-
- */
