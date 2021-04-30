@@ -10,7 +10,7 @@ npm install --save @kobayami/math.utils
 
 - Latest version: 1.1.2
 - License: [MIT](https://kobayami.github.io/math-utils/LICENSE.md)
-- [Changes](https://github.com/kobayami/math-utils/CHANGES.md)
+- [Changes](https://kobayami.github.io/math-utils/CHANGES.md)
 
 ## Summary
 
