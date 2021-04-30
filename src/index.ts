@@ -23,7 +23,7 @@ export function clampUnit(value: number): number {
  * to range _startValueTo .. endValueTo_ (inclusive)
  * by linear interpolation.
  *
- * This is equivalent to the [Lerp](//https://en.wikipedia.org/wiki/Linear_interpolation) function,
+ * This is equivalent to the [Lerp](https://en.wikipedia.org/wiki/Linear_interpolation) function,
  * where _value_ is the interpolation ratio, and the return value is the interpolated value.
  *
  * @param value value to convert, or interpolation ratio
@@ -39,7 +39,7 @@ export function unitToRange(value: number, startValueTo: number, endValueTo: num
  * to range _0 .. 1_ (inclusive)
  * by linear interpolation.
  *
- * This is equivalent to the inverse of the [Lerp](//https://en.wikipedia.org/wiki/Linear_interpolation) function,
+ * This is equivalent to the inverse of the [Lerp](https://en.wikipedia.org/wiki/Linear_interpolation) function,
  * where _value_ is the interpolated value, and the return value is the interpolation ratio.
  *
  * @param value value to convert, or interpolated value
@@ -99,7 +99,11 @@ export function uByteToUnit(value: number): number {
  *
  * @example
  *
- * _-13 % 5 = -3_, but _mod(-13, 5) = 2_
+ * ```ts
+ * -13 % 5 === -3
+ * // but:
+ * mod(-13, 5) === 2
+ * ```
  *
  * @param a dividend
  * @param b divisor
@@ -116,10 +120,12 @@ export function mod(a: number, b: number): number {
  *
  * @example
  *
- * _divFloor(-13, 5) = -3_
- * _divFloor(-10, 5) = -2_
- * _divFloor(7, 5) = 1_
- * _divFloor(15, 5) = 3_
+ * ```ts
+ * divFloor(-13, 5) // equals -3
+ * divFloor(-10, 5) // equals -2
+ * divFloor(7, 5)   // equals 1
+ * divFloor(15, 5)  // equals 3
+ * ```
  *
  * @param a dividend
  * @param b divisor
@@ -135,10 +141,12 @@ export function divFloor(a: number, b: number): number {
  *
  * @example
  *
- * _divTrunc(-13, 5) = -2_
- * _divTrunc(-10, 5) = -2_
- * _divTrunc(7, 5) = 1_
- * _divTrunc(15, 5) = 3_
+ * ```ts
+ * divTrunc(-13, 5) // equals -2
+ * divTrunc(-10, 5) // equals -2
+ * divTrunc(7, 5)   // equals 1
+ * divTrunc(15, 5)  // equals 3
+ * ```
  *
  * @param a dividend
  * @param b divisor
@@ -157,12 +165,25 @@ export function frac(value: number): number {
 }
 
 /**
- * Returns _true_, if a value is an integer, i.e., its fractional part is 0.
+ * Rounds a value to a number of decimal places.
+ * If that number is negative, then the rightmost digits left from the decimal point are also rounded.
  *
- * @param value the value
+ * @example
+ *
+ * ```ts
+ * roundPositions(1234.5678)      // equals 1234
+ * roundPositions(1234.5678, 2)   // equals 1234.57
+ * roundPositions(1234.5678, -2)  // equals 1200
+ * roundPositions(0x7ac3, -2, 16) // equals 0x7b00
+ * ```
+ *
+ * @param value value to round
+ * @param radix radix of the number system
+ * @param digits accuracy in digits of the given radix
  */
-export function isInteger(value: number): boolean {
-    return frac(value) === 0;
+export function round(value: number, digits: number = 0, radix: number = 10): number {
+    const exponent = digits * Math.log(radix);
+    return Math.round(value * Math.exp(exponent)) * Math.exp(-exponent);
 }
 
 /**
@@ -184,6 +205,69 @@ export function lower(value: number) {
 }
 
 /**
+ * Returns the _exponent_, such that _value = radix^exponent_.
+ *
+ * @param value _radix^exponent_
+ * @param radix _radix_
+ */
+export function log(value: number, radix: number): number {
+    return Math.log(value) / Math.log(radix);
+}
+
+/**
+ * Returns the _radix_, such that _value = radix^exponent_.
+ *
+ * @param value _radix^exponent_
+ * @param exponent _exponent_
+ */
+export function root(value: number, exponent: number): number {
+    return Math.exp(Math.log(value) / exponent);
+}
+
+/**
+ * Returns the number of digits required to represent the integral part of a value
+ * in a number system with the given radix.
+ *
+ * @param value the value
+ * @param radix radix of the number system
+ */
+export function getDigits(value: number, radix: number): number {
+    const adjustedValue = Math.max(Math.abs(value), 1);
+    return higher(log(adjustedValue, radix));
+}
+
+/**
+ * Returns the number of decimals required to represent the integral part of a value.
+ *
+ * @param value the value
+ */
+export function getDecimals(value: number): number {
+    return getDigits(value, 10);
+}
+
+/**
+ * Converts a value into a 32 bit signed integer number.
+ *
+ * This behaves like cutting the off the decimal places of the number (instead of rounding),
+ * then taking the lower 32 bits of the result and interpreting them as a two's complement value.
+ * This is equivalent to _value ^ 0_, because in JavaScript, bitwise operations use 32 bit operands.
+ *
+ * @param value the value
+ */
+export function toInt32(value: number): number {
+    return value ^ 0;
+}
+
+/**
+ * Returns _true_, if a value is an integer, i.e., its fractional part is 0.
+ *
+ * @param value the value
+ */
+export function isInteger(value: number): boolean {
+    return frac(value) === 0;
+}
+
+/**
  * Replaces _-0_ with _0_, and otherwise just returns _value_.
  *
  * @param value value that may be _-0_
@@ -199,19 +283,6 @@ export function maskMinus0(value: number): number {
  */
 export function signum(value: number): number {
     return maskMinus0(Math.sign(value));
-}
-
-/**
- * Converts a value into a 32 bit signed integer number.
- *
- * This behaves like cutting the off the decimal places of the number (instead of rounding),
- * then taking the lower 32 bits of the result and interpreting them as a two's complement value.
- * This is equivalent to _value ^ 0_, because in JavaScript, bitwise operations use 32 bit operands.
- *
- * @param value the value
- */
-export function toInt32(value: number): number {
-    return value ^ 0;
 }
 
 /**
@@ -260,45 +331,4 @@ export function radiansToDefaultRange(radians: number): number {
  */
 export function degreesToDefaultRange(degrees: number): number {
     return mod(degrees, 360);
-}
-
-/**
- * Returns the _exponent_, such that _value = radix^exponent_.
- *
- * @param value _radix^exponent_
- * @param radix _radix_
- */
-export function log(value: number, radix: number): number {
-    return Math.log(value) / Math.log(radix);
-}
-
-/**
- * Returns the _radix_, such that _value = radix^exponent_.
- *
- * @param value _radix^exponent_
- * @param exponent _exponent_
- */
-export function root(value: number, exponent: number): number {
-    return Math.exp(Math.log(value) / exponent);
-}
-
-/**
- * Returns the number of digits required to represent the integral part of a value
- * in a numbering system with the given radix.
- *
- * @param value the value
- * @param radix radix of the numbering system
- */
-export function getDigits(value: number, radix: number): number {
-    const adjustedValue = Math.max(Math.abs(value), 1);
-    return higher(log(adjustedValue, radix));
-}
-
-/**
- * Returns the number of decimals required to represent the integral part of a value.
- *
- * @param value the value
- */
-export function getDecimals(value: number): number {
-    return getDigits(value, 10);
 }

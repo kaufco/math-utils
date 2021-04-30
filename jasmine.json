@@ -1,9 +1,6 @@
 {
-    "spec_dir": "./spec",
+    "spec_dir": "./test",
     "spec_files": [
-        "**/*.spec.ts"
-    ],
-    "helpers": [
-        "jasmine/*.ts"
+        "**/*.spec.js"
     ]
 }

@@ -1,11 +1,10 @@
 {
     "compilerOptions": {
         "target": "es2015",
+        "module": "commonjs",
         "lib": [
-            "es2018",
-            "dom"
+            "es2018"
         ],
-        "outDir": "./lib",
         "removeComments": true,
         "declaration": true,
         "forceConsistentCasingInFileNames": true,
@@ -14,15 +13,11 @@
         "noImplicitReturns": true,
         "noPropertyAccessFromIndexSignature": true,
         "noUncheckedIndexedAccess": true,
-        "noUnusedLocals": true
+        "noUnusedLocals": true,
+        "outDir": "./lib"
     },
     "include": [
-        "src"
-    ],
-    "typedocOptions": {
-        "entryPoints": [
-            "src/index.ts"
-        ],
-        "out": "docs"
-    }
+        "src",
+        "spec"
+    ]
 }

@@ -1,4 +1,3 @@
-// @ts-ignore
 import {
     clamp,
     clampUnit,
@@ -6,8 +5,12 @@ import {
     degreesToRadians,
     divFloor,
     divTrunc,
+    frac,
     getDigits,
+    higher,
+    isInteger,
     log,
+    lower,
     maskMinus0,
     mod,
     radiansToDefaultRange,
@@ -15,11 +18,13 @@ import {
     rangeToRange,
     rangeToUnit,
     root,
+    round,
     signum,
+    toInt32,
     uByteToUnit,
     unitToRange,
     unitToUByte,
-} from '../src';
+} from '../lib';
 
 describe('Test Suite', () => {
     it('clamp', () => {
@@ -235,6 +240,74 @@ describe('Test Suite', () => {
             [3, 3 * 3 * 3 * 3 - 1, 4],
         ]) {
             expect(getDigits(value!, radix!)).toBe(expected!);
+        }
+    });
+    it('frac, round, higher, lower', () => {
+        for (const [
+            value,
+            expectedFrac,
+            expectedHigher,
+            expectedLower,
+            expectedRound,
+            expectedRound2,
+            expectedRoundMinus2,
+        ] of [
+            [-1.33323, -0.33323, -1, -2, -1, -1.33, -0],
+            [73.1355, 0.1355, 74, 73, 73, 73.14, 100],
+            [-73.1355, -0.1355, -73, -74, -73, -73.14, -100],
+            [0, 0, 1, -1, 0, 0, 0],
+            [0.2424, 0.2424, 1, 0, 0, 0.24, 0],
+            [0.8474, 0.8474, 1, 0, 1, 0.85, 0],
+            [1, 0, 2, 0, 1, 1, 0],
+            [132.233, 0.233, 133, 132, 132, 132.23, 100],
+            [193.923, 0.923, 194, 193, 194, 193.92, 200],
+            [-0.2424, -0.2424, 0, -1, 0, -0.24, 0],
+            [-0.8434, -0.8434, 0, -1, -1, -0.84, 0],
+            [-1, 0, 0, -2, -1, -1, 0],
+            [-132.233, -0.233, -132, -133, -132, -132.233, -100],
+            [-193.923, -0.923, -193, -194, -194, -193.92, -200],
+            [-1000, 0, -999, -1001, -1000, -1000, -1000],
+        ]) {
+            expect(frac(value!)).toBeCloseTo(expectedFrac!);
+            expect(higher(value!)).toBeCloseTo(expectedHigher!);
+            expect(lower(value!)).toBeCloseTo(expectedLower!);
+            expect(round(value!)).toBeCloseTo(expectedRound!);
+            expect(round(value!, 2)).toBeCloseTo(expectedRound2!);
+            expect(round(value!, -2)).toBeCloseTo(expectedRoundMinus2!);
+        }
+    });
+    it('round', () => {
+        for (const [value, expectedRoundMinus2, expectedRoundMinus4] of [
+            [0xcafebabe, 0xcafebb00, 0xcaff0000],
+            [0x477f, 0x4700, 0],
+            [0x477ff, 0x47800, 0x40000],
+            [0x46000, 0x46000, 0x40000],
+            [0x47a2c, 0x47a00, 0x40000],
+            [0x48721, 0x48700, 0x50000],
+            [-1, 0, 0],
+        ]) {
+            expect(round(value!, -2, 16)).toBeCloseTo(expectedRoundMinus2!);
+            expect(round(value!, -4, 16)).toBeCloseTo(expectedRoundMinus4!);
+        }
+    });
+    it('isInteger, toInt32', () => {
+        for (const [value, expectedToInt32] of [
+            [0, 0],
+            [0.827, 0],
+            [1, 1],
+            [7.34, 7],
+            [10, 10],
+            [99.9999, 99],
+            [100, 100],
+            [100.0001, 100],
+            [-932.9999, -932],
+            [-932.0001, -932],
+            [-932.5001, -932],
+            [-932.4999, -932],
+            [-932.0, -932],
+        ]) {
+            expect(toInt32(value!)).toBe(expectedToInt32!);
+            expect(isInteger(value!)).toBe(value! === expectedToInt32!);
         }
     });
 });

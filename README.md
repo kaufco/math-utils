@@ -1,5 +1,5 @@
 # @kobayami/math-utils
-  
+
 ## Installation
 
 ```sh
@@ -8,8 +8,9 @@ npm install --save @kobayami/math.utils
 
 ## Version and License
 
-- Latest version: 1.1.1
-- License: [MIT](https://kobayami.github.io/math-utils/LICENSE)
+- Latest version: 1.1.2
+- License: [MIT](https://kobayami.github.io/math-utils/LICENSE.md)
+- [Changes](https://github.com/kobayami/math-utils/CHANGES.md)
 
 ## Summary
 
@@ -18,17 +19,17 @@ Some little math helper functions that cover the following areas:
 - Division and modulo
 - Lerp functions (linear interpolation)
 - Clamp functions
-- Root and logrithm
+- Root and logarithm
 - Sign and integer
 - Rounding
 
 ## Usage Example
 
-```TypeScript
-import {mod, divFrac, divTrunc} from "@kobayami/math-utils/lib";
+```ts
+import { mod, divFloor, divTrunc } from "@kobayami/math-utils/lib";
 
 const two = mod(-13, 5);
-const minusThree = divFrac(-13, 5);
+const minusThree = divFloor(-13, 5);
 const minusTwo = divTrunc(-15, 5);
 ```
 
