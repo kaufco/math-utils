@@ -6,7 +6,6 @@
             "es2018"
         ],
         "removeComments": true,
-        "declaration": true,
         "forceConsistentCasingInFileNames": true,
         "strict": true,
         "noFallthroughCasesInSwitch": true,

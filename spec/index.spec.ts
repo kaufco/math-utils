@@ -8,6 +8,7 @@ import {
     frac,
     getDigits,
     higher,
+    isInt32,
     isInteger,
     log,
     lower,
@@ -290,24 +291,29 @@ describe('Test Suite', () => {
             expect(round(value!, -4, 16)).toBeCloseTo(expectedRoundMinus4!);
         }
     });
-    it('isInteger, toInt32', () => {
-        for (const [value, expectedToInt32] of [
-            [0, 0],
-            [0.827, 0],
-            [1, 1],
-            [7.34, 7],
-            [10, 10],
-            [99.9999, 99],
-            [100, 100],
-            [100.0001, 100],
-            [-932.9999, -932],
-            [-932.0001, -932],
-            [-932.5001, -932],
-            [-932.4999, -932],
-            [-932.0, -932],
+    it('isInteger, toInt32, isInt32', () => {
+        for (const [value, expectedToInt32, expectedIsInteger] of [
+            [0, 0, 1],
+            [0.827, 0, 0],
+            [1, 1, 1],
+            [7.34, 7, 0],
+            [10, 10, 1],
+            [99.9999, 99, 0],
+            [100, 100, 1],
+            [100.0001, 100, 0],
+            [-932.9999, -932, 0],
+            [-932.0001, -932, 0],
+            [-932.5001, -932, 0],
+            [-932.4999, -932, 0],
+            [-932.0, -932, 1],
+            [0x7fffffff, 0x7fffffff, 1],
+            [0x80000000, -0x80000000, 1],
+            [-0x80000000, -0x80000000, 1],
+            [-0x80000001, 0x7fffffff, 1],
         ]) {
             expect(toInt32(value!)).toBe(expectedToInt32!);
-            expect(isInteger(value!)).toBe(value! === expectedToInt32!);
+            expect(isInt32(value!)).toBe(value === expectedToInt32!);
+            expect(isInteger(value!)).toBe(!!expectedIsInteger);
         }
     });
 });

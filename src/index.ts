@@ -259,7 +259,18 @@ export function toInt32(value: number): number {
 }
 
 /**
- * Returns _true_, if a value is an integer, i.e., its fractional part is 0.
+ * Returns _true_ if a value is a 32 bit integer, i.e., lies in the range _-2^31 .. 2^31-1_
+ * and its fractional part is zero.
+ *
+ * @param value the value
+ */
+
+export function isInt32(value: number): boolean {
+    return value === (value ^ 0);
+}
+
+/**
+ * Returns _true_ if a value is an integer, i.e., its fractional part is 0.
  *
  * @param value the value
  */

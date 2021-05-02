@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.1.3
+
+- Added `isInt32`
+
 ## 1.1.2
 
 - Added `round`
