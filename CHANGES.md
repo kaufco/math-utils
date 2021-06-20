@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.1.4
+
+- Fixed typo in `README.md` installation instructions
+
 ## 1.1.3
 
 - Added `isInt32`
