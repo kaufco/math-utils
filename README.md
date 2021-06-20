@@ -3,7 +3,7 @@
 ## Installation
 
 ```sh
-npm install --save @kobayami/math.utils
+npm install --save @kobayami/math-utils
 ```
 
 ## Version and License
